@@ -32,7 +32,7 @@ httpMiddleware()
 ```
 
 ## API
-### mw = httpMiddleware(req, res, middleware [,done])
+### middleware(req, res, middleware [,done])
 Create a middleware layer that runs an array of middleware functions in
 sequence. Middleware functions have a signature of `req, res, next` where
 `next` is optional.
