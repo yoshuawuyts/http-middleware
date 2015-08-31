@@ -27,8 +27,6 @@ http.createServer((req, res) => {
   ]
   mw(req, res, fns, res.end)
 }).listen(1337)
-
-httpMiddleware()
 ```
 
 ## API
