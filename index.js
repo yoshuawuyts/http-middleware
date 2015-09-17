@@ -1,6 +1,7 @@
 const isReq = require('is-incoming-message')
 const isRes = require('is-server-response')
 const sequence = require('run-series')
+const dezalgo = require('dezalgo')
 const assert = require('assert')
 const noop = require('noop2')
 
@@ -18,6 +19,7 @@ function httpMiddleware (req, res, arr, done) {
 
   const fns = arr.map(function (fn) {
     return function (next) {
+      next = dezalgo(next)
       if (fn.length === 3) return fn(req, res, next)
       fn(req, res)
       next()

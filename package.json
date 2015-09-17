@@ -20,6 +20,7 @@
   ],
   "license": "MIT",
   "dependencies": {
+    "dezalgo": "^1.0.3",
     "is-incoming-message": "^1.0.0",
     "is-server-response": "^1.0.0",
     "noop2": "^2.0.0",
