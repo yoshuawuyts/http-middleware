@@ -1,6 +1,6 @@
 const isReq = require('is-incoming-message')
 const isRes = require('is-server-response')
-const sequence = require('run-series')
+const mapLimit = require('map-limit')
 const dezalgo = require('dezalgo')
 const assert = require('assert')
 const noop = require('noop2')
@@ -15,16 +15,14 @@ function httpMiddleware (req, res, arr, done) {
   assert.ok(isReq(req), 'is incoming message')
   assert.ok(isRes(res), 'is server response')
   assert.ok(Array.isArray(arr), 'is array')
-  assert.equal(typeof done, 'function')
+  assert.equal(typeof done, 'function', 'is function')
 
-  const fns = arr.map(function (fn) {
-    return function (next) {
-      next = dezalgo(next)
-      if (fn.length === 3) return fn(req, res, next)
-      fn(req, res)
-      next()
-    }
-  })
+  mapLimit(arr, 1, iterator, done)
 
-  sequence(fns, done)
+  function iterator (fn, next) {
+    next = dezalgo(next)
+    if (fn.length === 3) return fn(req, res, next)
+    fn(req, res)
+    next()
+  }
 }
